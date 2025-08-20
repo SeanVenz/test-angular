@@ -1,0 +1,37 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Todo } from '../model/profile.type';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+
+  http = inject(HttpClient);
+
+  getTodoFromApi = () => {
+    const url = 'https://jsonplaceholder.typicode.com/todos/';
+    return this.http.get<Array<Todo>>(url);
+  }
+
+  login = (username:string, password:string, email:string) => {
+    const url = `http://localhost:3000/api/users/register`
+    const body = {username, password, email};
+
+    return this.http.post(url, body, {
+      headers: {'Content-Type': 'application/json'}
+    });
+  }
+  
+  delete = () => {
+    const url = `http://localhost:3000/api/users/delete/493937dc-b649-4d0b-9d61-9ea0715187a4`
+    return this.http.delete(url);
+  }
+
+  edit = () => {
+    const url = `http://localhost:3000/api/users/edit/5cfe06fe-8dc7-4fa0-91fc-b8dd97cf4e30`
+    const body = {username: 'bilat', 'email': 'bilat@gmail.com'}
+    return this.http.put(url, body);
+  }
+
+}

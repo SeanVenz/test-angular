@@ -1,0 +1,15 @@
+<h1>NOT USING OBJECT</h1>
+<div>
+  <p>Title: {{ title() }}</p>
+  <p>Price: {{ price() }}</p>
+  <p>Category: {{ category() }}</p>
+  <p>Status: @if (inStock()){ In Stock } @else {Out Of stock}</p>
+</div>
+
+<h1>USING OBJECT</h1>
+<div>
+  <p>Title: {{ product()?.title }}</p>
+  <p>Price: {{ product()?.price }}</p>
+  <p>Category: {{ product()?.category }}</p>
+  <p>Status: @if(product()?.inStock){ In Stock } @else{ Out Of Stock }</p>
+</div>

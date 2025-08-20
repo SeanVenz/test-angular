@@ -1,0 +1,31 @@
+<!-- <div>
+    <p>{{counter()}}</p>
+    <button (click)="increase.emit()">Increase</button>
+    <button (click)="decrease.emit()">Decrease</button>
+    <button (click)="reset.emit()">Reset</button>
+</div> -->
+
+<!-- <div>
+    @for (item of cart(); track $index) {
+        <p>{{item.id}}</p>
+        <p>{{item.name}}</p>
+        <p>{{item.price}}</p>
+        <button (click)="addToCart.emit(item)">Add To Cart</button>
+    }
+</div> -->
+
+<!-- @for (item of todos(); track $index) {
+    <div>
+        <p>{{item.id}}</p>
+        <p>{{item.title}}</p>
+        <p>{{item.completed}}</p>
+        <p>{{item.userId}}</p>
+    </div>
+} -->
+
+<input type="text" id="username" (input)="username.set($any($event.target).value)">
+<input type="text" id="email" (input)="email.set($any($event.target).value)">
+<input type="password" id="password" (input)="password.set($any($event.target).value)">
+<button (click)="submit()">Submit</button>
+<button (click)="delete()">Delete</button>
+<button (click)="update()">Edit</button>
