@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { SubjectsService } from '../../services/subjects.service';
 
 @Component({
   selector: 'app-user-card',
@@ -7,6 +8,16 @@ import { Component, input } from '@angular/core';
   styleUrl: './user-card.component.scss'
 })
 export class UserCardComponent {
-  name = input<string>();
-  age = input<number>();
+  // name = input<string>();
+  // age = input<number>();
+
+  constructor(private subjectService:SubjectsService){}
+
+  sayHello(){
+    this.subjectService.sendMessagePlain('Hello');
+  }
+
+  sayWorld(){
+    this.subjectService.sendMessagePlain('World');
+  }
 }

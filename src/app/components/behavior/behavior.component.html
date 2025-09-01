@@ -1,0 +1,33 @@
+<div class="demo">
+  <h2>Plain Subject Demo</h2>
+  <ul>
+    @for (item of plainLogs; track $index) {
+        <li>{{item}}</li>
+    }
+  </ul>
+</div>
+
+
+<div class="demo">
+  <h2>BehaviorSubject Demo</h2>
+  <ul>
+    @for (item of behaviorLogs; track $index) {
+        <li>{{item}}</li>
+    }
+  </ul>
+</div>
+
+<div class="demo">
+  <h2>Replay Subject Demo</h2>
+  <ul>
+    @for (item of replayLogs; track $index) {
+        <li>{{item}}</li>
+    }
+  </ul>
+</div>
+
+<h2>AsyncSubject Demo</h2>
+<button (click)="emitValues()">Emit Values</button>
+<button (click)="subscribeA()">Subscribe A</button>
+<button (click)="subscribeB()">Subscribe B</button>
+<button (click)="complete()">Complete</button>

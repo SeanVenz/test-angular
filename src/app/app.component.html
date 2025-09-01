@@ -21,3 +21,29 @@
 <!-- <app-student [todos]="todoItems()"></app-student> -->
 
 <!-- <app-student [cart]="cart()" (addToCart)="addToCart($event)"/> -->
+
+<!-- <p>{{counter()}}</p>-->
+
+<!-- @for (item of message(); track $index) {
+  <p>{{item}}</p>
+} -->
+
+<!-- @if (message()) {
+  <p>{{message()}}</p>
+} -->
+
+<!-- <app-subjects-lesson></app-subjects-lesson> -->
+
+<!-- <app-user-card></app-user-card>
+<p>{{message()}}</p> -->
+
+<!-- <app-behavior-demo/> -->
+
+<input #searchBox type="text" placeholder="Type To Search...">
+
+@for (item of users; track $index) {
+  <ul>
+    <li>{{item.name}}</li>
+    <li>{{item.email}}</li>
+  </ul>
+}
