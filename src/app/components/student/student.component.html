@@ -23,9 +23,18 @@
     </div>
 } -->
 
-<input type="text" id="username" (input)="username.set($any($event.target).value)">
+<!-- <input type="text" id="username" (input)="username.set($any($event.target).value)">
 <input type="text" id="email" (input)="email.set($any($event.target).value)">
 <input type="password" id="password" (input)="password.set($any($event.target).value)">
 <button (click)="submit()">Submit</button>
 <button (click)="delete()">Delete</button>
-<button (click)="update()">Edit</button>
+<button (click)="update()">Edit</button> -->
+
+<!-- @for (item of cart(); track $index) {
+    <div>
+        <p>ID: {{item.id}}</p>
+        <p>Name: {{item.name}}</p>
+        <p>Price: {{item.price}}</p>
+        <button (click)="addToCart.emit(item)">Add To Cart</button>
+    </div>
+} -->

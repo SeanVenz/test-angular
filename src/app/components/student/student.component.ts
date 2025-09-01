@@ -34,54 +34,58 @@ export class StudentComponent {
 
   // todos = input<Todo[]>([]);
 
-  username = signal<string>('');
-  password = signal<string>('');
-  email = signal<string>('')
+  // username = signal<string>('');
+  // password = signal<string>('');
+  // email = signal<string>('')
 
-  apiservice = inject(ApiService);
+  // apiservice = inject(ApiService);
 
-  submit = () =>{
-    this.apiservice.login(this.username(), this.password(), this.email())
-      .pipe(catchError((err) => {
-        console.log(err);
-        throw err;
-      })  
-    )
-    .subscribe({
-      next: (res) => {
-        console.log('Success', res);
-      },
-      error:(err) => {
-        console.log('err', err);
-      }
-    })
-  }
+  // submit = () =>{
+  //   this.apiservice.login(this.username(), this.password(), this.email())
+  //     .pipe(catchError((err) => {
+  //       console.log(err);
+  //       throw err;
+  //     })  
+  //   )
+  //   .subscribe({
+  //     next: (res) => {
+  //       console.log('Success', res);
+  //     },
+  //     error:(err) => {
+  //       console.log('err', err);
+  //     }
+  //   })
+  // }
 
-  delete = () => {
-    this.apiservice.delete()
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
+  // delete = () => {
+  //   this.apiservice.delete()
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log(res);
+  //       },
 
-        error:(err) => {
-          console.log(err.error);
-        }
+  //       error:(err) => {
+  //         console.log(err.error);
+  //       }
 
         
-      })
-  }
+  //     })
+  // }
 
-  update = () => {
-    this.apiservice.edit()
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-        },
+  // update = () => {
+  //   this.apiservice.edit()
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log(res);
+  //       },
 
-        error:(err) => {
-          console.log(err);
-        }
-      })
-  }
+  //       error:(err) => {
+  //         console.log(err);
+  //       }
+  //     })
+  // }
+
+  // cart = input<Array<Cart>>();
+
+  // addToCart = output<Cart>();
 }

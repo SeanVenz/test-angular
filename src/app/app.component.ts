@@ -74,11 +74,15 @@ export class AppComponent implements OnInit{
   //       })
   // }
 
-  apiService = inject(ApiService);
+  // cart = signal<Cart[]>([
+  //   {id: 1, name: 'bahog', price: 50},
+  //   {id: 2, name: 'belat', price: 100},
+  //   {id: 3, name: 'ka', price: 150},
+  // ])
 
-  login = () => {
-    
-  } 
+  // addToCart = (cart: Cart) => {
+  //   console.log(cart);
+  // }
 
   ngOnInit(): void {
       
