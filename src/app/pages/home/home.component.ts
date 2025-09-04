@@ -68,16 +68,16 @@ export class HomeComponent {
   //   this.store.dispatch(removeTodo({id}))
   // }
 
-  todos:Observable<Todo[]>;
+  todos$:Observable<Todo[]>;
   newTodo = ''
-  completed:Observable<number>;
-  total:Observable<number>;
-  inProgress:Observable<number>;
+  // completed:Observable<number>;
+  // total:Observable<number>;
+  // inProgress:Observable<number>;
   constructor(private store:Store){
-    this.todos = this.store.select(selectTodos)
-    this.completed = this.store.select(getCompletedTodos);
-    this.total = this.store.select(totalTodoCount);
-    this.inProgress = this.store.select(getCompletedProgress)
+    this.todos$ = this.store.select(selectTodos)
+    // this.completed = this.store.select(getCompletedTodos);
+    // this.total = this.store.select(totalTodoCount);
+    // this.inProgress = this.store.select(getCompletedProgress)
   }
 
   load(){

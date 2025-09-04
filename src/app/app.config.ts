@@ -12,6 +12,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { counterReducer } from './stateManagement/counter/counter.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { todoReducer } from './stateManagement/todo/todo.reducer';
+import { TodoEffects } from './stateManagement/todo/todo.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore({ counter: counterReducer, todos: todoReducer }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(),
+    provideEffects([TodoEffects]),
   ],
 };

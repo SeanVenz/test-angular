@@ -29,7 +29,7 @@
 
 <button (click)="load()">Load Todo</button>
 
-@for (item of todos | async; track $index) {
+@for (item of todos$ | async; track $index) {
     <ul>
         <li>{{item.title}}</li>
     </ul>
@@ -37,9 +37,9 @@
 
 <input type="text" [(ngModel)]="newTodo">
 <button (click)="add()">Add Todo</button>
-<p>Completed: {{completed | async}}</p>
+<!-- <p>Completed: {{completed | async}}</p>
 <p>In Progress: {{inProgress | async}}</p>
 <p>Percentage: {{inProgress | async}}</p>
-<p>Total Todo: {{total | async}}</p>
+<p>Total Todo: {{total | async}}</p> -->
 
 <a routerLink="/about">About</a>
