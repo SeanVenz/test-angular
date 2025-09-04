@@ -4,7 +4,7 @@
 
 import { createReducer, on } from "@ngrx/store";
 import { Todo } from "../../model/profile.type";
-import { addTodoAPI, addTodoSuccess, loadTodoSucces } from "./todo.action";
+import * as TodoActions from './todo.action'
 
 // export const initialState:Todo[] = [];
 
@@ -37,8 +37,8 @@ export const todoReducer = createReducer(
     initialState,
 
     //Replace todo with one from API
-    on(loadTodoSucces, (state, {todos}) => [...todos]),
+    on(TodoActions.loadTodoSucces, (state, {todos}) =>  todos ),
 
     // Add Todo Returned by API when adding
-    on(addTodoSuccess, (state, {todo}) => [...state, todo])
+    on(TodoActions.addTodoSuccess, (state, {todo}) =>  [...state, todo])
 )

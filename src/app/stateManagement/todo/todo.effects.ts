@@ -4,18 +4,20 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as TodoActions from './todo.action'
 import { catchError, map, mergeMap, of } from "rxjs";
 import { Todo } from "../../model/profile.type";
+import { ApiService } from "../../services/api.service";
 
 @Injectable()
 export class TodoEffects {
     private actions$ = inject(Actions);
     private http = inject(HttpClient);
+    private api = inject(ApiService)
 
     //load Todo
     loadTodos$ = createEffect(() =>
         this.actions$.pipe(
             ofType(TodoActions.loadTodo),
             mergeMap(() =>
-                this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=5').pipe(
+                this.api.getTodoFromApi().pipe(
                     map((todos) => TodoActions.loadTodoSucces({ todos })),
                     catchError((error) =>
                         of(TodoActions.loadTodoFailure({ error: error.message }))

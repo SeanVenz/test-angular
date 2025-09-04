@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { createReducer, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectCounter } from '../../stateManagement/counter/counter.selectors';
@@ -18,7 +18,7 @@ import * as TodoActions from '../../stateManagement/todo/todo.action'
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   //COUNTER SAMPLE
 
@@ -89,5 +89,9 @@ export class HomeComponent {
       this.store.dispatch(TodoActions.addTodoAPI({title:this.newTodo}))
       this.newTodo = ''
     }
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(TodoActions.loadTodo());
   }
 }

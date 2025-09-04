@@ -10,7 +10,7 @@ export class ApiService {
   http = inject(HttpClient);
 
   getTodoFromApi = () => {
-    const url = 'https://jsonplaceholder.typicode.com/todos/';
+    const url = 'https://jsonplaceholder.typicode.com/todos?_limit=5';
     return this.http.get<Array<Todo>>(url);
   }
 
