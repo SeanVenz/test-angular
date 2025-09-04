@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { selectCounter } from '../../stateManagement/counter/counter.selectors';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { Todo } from '../../model/profile.type';
-import { selectTodos } from '../../stateManagement/todo/todo.selector';
+// import { selectTodos } from '../../stateManagement/todo/todo.selector';
 import { FormsModule } from '@angular/forms';
-import { toggleTodo } from '../../stateManagement/todo/todo.action';
+// import { toggleTodo } from '../../stateManagement/todo/todo.action';
 
 @Component({
   selector: 'app-about',
@@ -17,17 +17,17 @@ import { toggleTodo } from '../../stateManagement/todo/todo.action';
 export class AboutComponent {
 
   // counter:Observable<number>;
-  todo:Observable<Todo[]>;
+  // todo:Observable<Todo[]>;
 
   // constructor(private store:Store){
   //   this.counter = this.store.select(selectCounter);
   // }
 
-  constructor(private store:Store){
-    this.todo = this.store.select(selectTodos)
-  }
+  // constructor(private store:Store){
+  //   this.todo = this.store.select(selectTodos)
+  // }
 
-  onToggle(id:number){
-    this.store.dispatch(toggleTodo({id}))
-  }
+  // onToggle(id:number){
+  //   this.store.dispatch(toggleTodo({id}))
+  // }
 }

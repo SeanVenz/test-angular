@@ -2,7 +2,7 @@
 
 <p>{{counter | async}}</p> -->
 
-@for (item of todo | async; track $index) {
+<!-- @for (item of todo | async; track $index) {
     <input type="checkbox" [checked]="item.completed" (change)="onToggle(item.id)">
     <span [ngClass]="{done:item.completed}"> {{item.title}}</span>
-}
+} -->

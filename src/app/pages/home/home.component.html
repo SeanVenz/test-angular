@@ -9,7 +9,7 @@
 
 <!-- TODO -->
 
-<input type="text" [(ngModel)]="newTodo">
+<!-- <input type="text" [(ngModel)]="newTodo">
 <button (click)="onAddTodo()">Add Todo</button>
 
 @for (item of todo | async; track $index) {
@@ -23,6 +23,23 @@
     <p>In Progress: {{inProgress | async}}</p>
     <p>Percentage: {{inProgress | async}}</p>
     <p>Total Todo: {{total | async}}</p>
-</div>
+</div> -->
+
+<!-- ADD TODO USING API -->
+
+<button (click)="load()">Load Todo</button>
+
+@for (item of todos | async; track $index) {
+    <ul>
+        <li>{{item.title}}</li>
+    </ul>
+}
+
+<input type="text" [(ngModel)]="newTodo">
+<button (click)="add()">Add Todo</button>
+<p>Completed: {{completed | async}}</p>
+<p>In Progress: {{inProgress | async}}</p>
+<p>Percentage: {{inProgress | async}}</p>
+<p>Total Todo: {{total | async}}</p>
 
 <a routerLink="/about">About</a>

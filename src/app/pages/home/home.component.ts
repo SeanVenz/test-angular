@@ -6,9 +6,11 @@ import { decrement, increment, reset } from '../../stateManagement/counter/count
 import { AsyncPipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Todo } from '../../model/profile.type';
-import { getCompletedProgress, getCompletedTodos, selectTodos, totalTodoCount } from '../../stateManagement/todo/todo.selector';
-import { addTodo, removeTodo, toggleTodo } from '../../stateManagement/todo/todo.action';
+import { getCompletedProgress, getCompletedTodos, totalTodoCount } from '../../stateManagement/todo/todo.selector';
+// import { addTodo, removeTodo, toggleTodo } from '../../stateManagement/todo/todo.action';
 import { FormsModule, NgModel } from '@angular/forms';
+import { selectTodos } from '../../stateManagement/todo/todo.selector';
+import * as TodoActions from '../../stateManagement/todo/todo.action'
 
 @Component({
   selector: 'app-home',
@@ -39,30 +41,53 @@ export class HomeComponent {
   // }
 
   //TODO SAMPLE
-  newTodo = '';
-  todo:Observable<Todo[]>;
+  // newTodo = '';
+  // todo:Observable<Todo[]>;
+  // completed:Observable<number>;
+  // total:Observable<number>;
+  // inProgress:Observable<number>;
+
+  // constructor(private store:Store){
+  //   this.todo = this.store.select(selectTodos)
+  //   this.completed = this.store.select(getCompletedTodos);
+  //   this.total = this.store.select(totalTodoCount);
+  //   this.inProgress = this.store.select(getCompletedProgress)
+  // }
+
+  // onAddTodo(){
+  //   if(this.newTodo.trim()){
+  //     this.store.dispatch(addTodo({title:this.newTodo}))
+  //   }
+  // }
+
+  // onToggle(id:number){
+  //   this.store.dispatch(toggleTodo({id}))
+  // }
+
+  // onRemove(id:number){
+  //   this.store.dispatch(removeTodo({id}))
+  // }
+
+  todos:Observable<Todo[]>;
+  newTodo = ''
   completed:Observable<number>;
   total:Observable<number>;
   inProgress:Observable<number>;
-
   constructor(private store:Store){
-    this.todo = this.store.select(selectTodos)
+    this.todos = this.store.select(selectTodos)
     this.completed = this.store.select(getCompletedTodos);
     this.total = this.store.select(totalTodoCount);
     this.inProgress = this.store.select(getCompletedProgress)
   }
 
-  onAddTodo(){
+  load(){
+    this.store.dispatch(TodoActions.loadTodo());
+  }
+
+  add(){
     if(this.newTodo.trim()){
-      this.store.dispatch(addTodo({title:this.newTodo}))
+      this.store.dispatch(TodoActions.addTodoAPI({title:this.newTodo}))
+      this.newTodo = ''
     }
-  }
-
-  onToggle(id:number){
-    this.store.dispatch(toggleTodo({id}))
-  }
-
-  onRemove(id:number){
-    this.store.dispatch(removeTodo({id}))
   }
 }
