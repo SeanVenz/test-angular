@@ -1,0 +1,28 @@
+<!-- <p>home works!</p>
+<h1>SIMPLE NGRX COUNTER</h1>
+<p>{{counter | async}}</p>
+
+<a routerLink="/about">About</a>
+<button (click)="onIncrement()">Increment</button>
+<button (click)="onDecrement()">Decrement</button>
+<button (click)="onReset()">Reset</button> -->
+
+<!-- TODO -->
+
+<input type="text" [(ngModel)]="newTodo">
+<button (click)="onAddTodo()">Add Todo</button>
+
+@for (item of todo | async; track $index) {
+    <input type="checkbox" [checked]="item.completed" (change)="onToggle(item.id)">
+    <span [ngClass]="{done:item.completed}"> {{item.title}}</span>
+    <button (click)="onRemove(item.id)">Remove</button>
+}
+
+<div>
+    <p>Completed: {{completed | async}}</p>
+    <p>In Progress: {{inProgress | async}}</p>
+    <p>Percentage: {{inProgress | async}}</p>
+    <p>Total Todo: {{total | async}}</p>
+</div>
+
+<a routerLink="/about">About</a>

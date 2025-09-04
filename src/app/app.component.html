@@ -1,3 +1,4 @@
+<router-outlet>
 <!-- @for (prof of profiles(); track $index) {
   <div> -->
     <!-- <app-profile-card-component [name]="prof.name" [role]="prof.role" [experience]="prof.experience"/> -->
@@ -39,11 +40,53 @@
 
 <!-- <app-behavior-demo/> -->
 
-<input #searchBox type="text" placeholder="Type To Search...">
+<!-- <input #searchBox type="text" placeholder="Type To Search...">
 
 @for (item of users; track $index) {
   <ul>
     <li>{{item.name}}</li>
     <li>{{item.email}}</li>
   </ul>
+} -->
+
+<!-- <h1>Load From multiple Streams But dont Care who comes first</h1>
+
+<button (click)="loadFromMultipleSources()">Load Multiple</button>
+
+@for (item of messages(); track $index) {
+  <p>{{item}}</p>
 }
+
+@for (item of usersAndPosts(); track $index) {
+  <p>{{item}}</p>
+} -->
+
+<!-- <h1>Load From multiple Streams and Care who comes first</h1>
+
+@for (item of users(); track $index) {
+  <p>{{item}}</p>
+}
+
+@for (item of posts(); track $index) {
+  <p>{{item}}</p>
+} -->
+
+<!-- <input #userBox type="text" placeholder="Search Users...">
+<input #postBox type="text" placeholder="Search Posts...">
+
+@for (item of users(); track $index) {
+  <p>{{item}}</p>
+}
+
+@for (item of posts(); track $index) {
+  <p>{{item}}</p>
+} -->
+
+<!-- @for (item of result(); track $index) {
+  <p>{{item.user.name}}</p>
+} -->
+
+
+
+
+</router-outlet>

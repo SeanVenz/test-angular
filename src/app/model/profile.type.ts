@@ -29,9 +29,15 @@ export type Task = {
     done: boolean
 }
 
-export type Todo = {
-    userId: number,
-    completed: boolean,
-    title: string,
-    id: number
+// export type Todo = {
+//     userId: number,
+//     completed: boolean,
+//     title: string,
+//     id: number
+// }
+
+export interface Todo{
+    id:number,
+    title:string,
+    completed:boolean
 }
