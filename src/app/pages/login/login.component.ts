@@ -23,26 +23,16 @@ export class LoginComponent {
   error$: Observable<string | null>
   loading$: Observable<boolean>
 
-  user!: Signal<UserResponseSuccess | null>;
-
   constructor(private store:Store){
     this.user$ = this.store.select(selectUser)
     this.error$ = this.store.select(selectAuthError);
     this.loading$ = this.store.select(selectAuthLoading)
 
-    this.user = toSignal(this.user$, { initialValue: null });
-
-    this.error$.subscribe(error => console.log('Error state:', error));
-    this.user$.subscribe(user => console.log('User state:', user));
-    this.loading$.subscribe(loading => console.log('Loading state:', loading));
-
-
-    effect(() => {
-      const user = this.user;
-      if(user()){
+    this.user$.subscribe(user => {
+      if(user?.success){
         this.router.navigate(['/about']);
       }
-    })
+    });
   }
 
   form:FormGroup = this.fb.group({
