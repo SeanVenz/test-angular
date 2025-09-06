@@ -17,22 +17,32 @@ export const initialState: AuthState = {
 export const userReducer = createReducer<AuthState>(
     initialState,
 
-    on(UserActions.loginUser, (state,) => ({
-        ...state,
-        loading:true,
-        error:null
-    })),
+    on(UserActions.loginUser, (state) => {
+        console.log('Reducer: loginUser action');
+        return {
+            ...state,
+            loading:true,
+            error:null
+        };
+    }),
 
-    on(UserActions.loadUserSuccess, (state, {userResponse}) => ({
-        ...state,
-        user:userResponse,
-        loading: false,
-        error:null
-    })),
+    on(UserActions.loadUserSuccess, (state, {userResponse}) => {
+        console.log('Reducer: loadUserSuccess action', userResponse);
+        return {
+            ...state,
+            user:userResponse,
+            loading: false,
+            error:null
+        };
+    }),
 
-    on(UserActions.loadUserFailed, (state) => ({
-        ...state,
-        loading:false,
-        error:null
-    }))
+    on(UserActions.loadUserFailed, (state, {userResponse}) => {
+        console.log('Reducer: loadUserFailed action', userResponse);
+        return {
+            ...state,
+            user: null,
+            loading:false,
+            error: userResponse.message
+        };
+    })
 )
