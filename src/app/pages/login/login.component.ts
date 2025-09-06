@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, Signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { User, UserResponseSuccess } from '../../model/profile.type';
@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { selectAuthError, selectAuthLoading, selectUser } from '../../stateManagement/auth/auth.selector';
 import { loginUser } from '../../stateManagement/auth/auth.action';
 import { AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -15,19 +17,32 @@ import { AsyncPipe } from '@angular/common';
 })
 export class LoginComponent {
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   user$: Observable<UserResponseSuccess | null>;
   error$: Observable<string | null>
   loading$: Observable<boolean>
+
+  user!: Signal<UserResponseSuccess | null>;
 
   constructor(private store:Store){
     this.user$ = this.store.select(selectUser)
     this.error$ = this.store.select(selectAuthError);
     this.loading$ = this.store.select(selectAuthLoading)
 
+    this.user = toSignal(this.user$, { initialValue: null });
+
     this.error$.subscribe(error => console.log('Error state:', error));
     this.user$.subscribe(user => console.log('User state:', user));
     this.loading$.subscribe(loading => console.log('Loading state:', loading));
+
+
+    effect(() => {
+      const user = this.user;
+      if(user()){
+        this.router.navigate(['/about']);
+      }
+    })
   }
 
   form:FormGroup = this.fb.group({
@@ -38,7 +53,7 @@ export class LoginComponent {
   onSubmit = () => {
     if(this.form.valid){
       const data = this.form.getRawValue();
-      const resp = this.store.dispatch(loginUser({
+      this.store.dispatch(loginUser({
         user:{
           email:data.email,
           password:data.password
