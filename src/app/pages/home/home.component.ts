@@ -14,7 +14,7 @@ import * as TodoActions from '../../stateManagement/todo/todo.action'
 
 @Component({
   selector: 'app-home',
-  imports: [AsyncPipe, RouterLink, NgClass, FormsModule],
+  imports: [AsyncPipe, RouterLink, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

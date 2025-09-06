@@ -39,6 +39,6 @@ export const todoReducer = createReducer(
     //Replace todo with one from API
     on(TodoActions.loadTodoSucces, (state, {todos}) =>  todos ),
 
-    // Add Todo Returned by API when adding
+    // Add Todo Returned by API when adding (appending)
     on(TodoActions.addTodoSuccess, (state, {todo}) =>  [...state, todo])
 )

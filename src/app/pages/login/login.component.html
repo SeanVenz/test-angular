@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="email" placeholder="username" formControlName="email">
+    <input type="password" placeholder="password" formControlName="password">
+    <button [disabled]="form.invalid">Submit</button>
+</form>
+
+@if (user$ | async; as user) {
+    <p>{{user.user.username}}</p>
+    <p>{{user.user.id}}</p>
+    <p>{{user.user.email}}</p>
+}

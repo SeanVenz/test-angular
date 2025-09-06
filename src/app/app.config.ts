@@ -13,14 +13,16 @@ import { counterReducer } from './stateManagement/counter/counter.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { todoReducer } from './stateManagement/todo/todo.reducer';
 import { TodoEffects } from './stateManagement/todo/todo.effects';
+import { userReducer } from './stateManagement/auth/auth.reducer';
+import { AuthEffects } from './stateManagement/auth/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({ counter: counterReducer, todos: todoReducer }),
+    provideStore({ counter: counterReducer, todos: todoReducer, user:userReducer }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects([TodoEffects]),
+    provideEffects([TodoEffects, AuthEffects]),
   ],
 };

@@ -42,3 +42,26 @@ export interface Todo{
   title: string;
   completed: boolean;
 }
+
+export interface UserLogin{
+    email:string;
+    password:string;
+}
+
+export interface User{
+    id:string;
+    username:string;
+    email:string
+}
+
+export interface UserResponseSuccess{
+    message:string;
+    success:boolean;
+    user:User
+    token:string
+}
+
+export interface UserResponseFailure{
+    success:boolean;
+    message:string
+}
