@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Todo, UserResponseSuccess } from '../model/profile.type';
+import { RegisterResponse, Todo, UserResponseSuccess } from '../model/profile.type';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class ApiService {
     const url = `http://localhost:3000/api/users/register`
     const body = {username, password, email};
 
-    return this.http.post<UserResponseSuccess>(url, body, {
+    return this.http.post<RegisterResponse>(url, body, {
       headers: {'Content-Type': 'application/json'}
     });
   }
@@ -27,11 +27,9 @@ export class ApiService {
   login = (email:string, password:string) : Observable<UserResponseSuccess> => {
     const url = `http://localhost:3000/api/users/login`
     const body = {email, password };
-    console.log(email, password);
     const effect = this.http.post<UserResponseSuccess>(url, body, {
       headers: {'Content-Type': 'application/json'}
     });
-    console.log(effect)
     return effect;
   }
   

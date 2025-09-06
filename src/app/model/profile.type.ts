@@ -48,6 +48,13 @@ export interface UserLogin{
     password:string;
 }
 
+export interface UserRegister{
+    email:string;
+    username:string;
+    password:string;
+}
+
+
 export interface User{
     id:string;
     username:string;
@@ -59,6 +66,11 @@ export interface UserResponseSuccess{
     success:boolean;
     user:User
     token:string
+}
+
+export interface RegisterResponse{
+    message:string | null;
+    success:boolean
 }
 
 export interface UserResponseFailure{

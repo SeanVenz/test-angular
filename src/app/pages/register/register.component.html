@@ -1,0 +1,9 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="userName" placeholder="Username">
+    <input type="password" formControlName="password" placeholder="Password">
+    <input type="email" formControlName="email" placeholder="Email">
+    <button>Submit</button>
+</form>
+
+<p>{{error()}}</p>
+<p>{{success()}}</p>
