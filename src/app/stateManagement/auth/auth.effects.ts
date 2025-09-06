@@ -15,10 +15,8 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(UserActions.loginUser),
             mergeMap(({ user }) => {
-                console.log('Effect triggered with user:', user);
                 return this.authService.login(user.email, user.password).pipe(
                     map((userResponse: UserResponseSuccess) => {
-                        console.log('Login success in effect:', userResponse);
                         return UserActions.loadUserSuccess({ userResponse });
                     }),
                     catchError((error) => {

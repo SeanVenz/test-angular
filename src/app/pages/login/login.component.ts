@@ -25,7 +25,7 @@ export class LoginComponent {
     this.error$ = this.store.select(selectAuthError);
     this.loading$ = this.store.select(selectAuthLoading)
 
-        this.error$.subscribe(error => console.log('Error state:', error));
+    this.error$.subscribe(error => console.log('Error state:', error));
     this.user$.subscribe(user => console.log('User state:', user));
     this.loading$.subscribe(loading => console.log('Loading state:', loading));
   }
@@ -44,7 +44,6 @@ export class LoginComponent {
           password:data.password
         }
       }));
-      console.log(resp)
     }
   }
 }

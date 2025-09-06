@@ -18,7 +18,6 @@ export const userReducer = createReducer<AuthState>(
     initialState,
 
     on(UserActions.loginUser, (state) => {
-        console.log('Reducer: loginUser action');
         return {
             ...state,
             loading:true,
@@ -27,7 +26,6 @@ export const userReducer = createReducer<AuthState>(
     }),
 
     on(UserActions.loadUserSuccess, (state, {userResponse}) => {
-        console.log('Reducer: loadUserSuccess action', userResponse);
         return {
             ...state,
             user:userResponse,
@@ -37,7 +35,6 @@ export const userReducer = createReducer<AuthState>(
     }),
 
     on(UserActions.loadUserFailed, (state, {userResponse}) => {
-        console.log('Reducer: loadUserFailed action', userResponse);
         return {
             ...state,
             user: null,
