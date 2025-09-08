@@ -2,9 +2,9 @@
 // import { Todo } from "../../model/profile.type";
 // import { addTodo, removeTodo, toggleTodo } from "./todo.action";
 
-import { createReducer, on } from "@ngrx/store";
-import { Todo } from "../../model/profile.type";
-import * as TodoActions from './todo.action'
+// import { createReducer, on } from "@ngrx/store";
+// import { Todo } from "../../model/profile.type";
+// import * as TodoActions from './todo.action'
 
 // export const initialState:Todo[] = [];
 
@@ -31,14 +31,66 @@ import * as TodoActions from './todo.action'
 
 // )
 
-export const initialState:Todo[] = [];
+// export const initialState:Todo[] = [];
+
+// export const todoReducer = createReducer(
+//     initialState,
+
+//     //Replace todo with one from API
+//     on(TodoActions.loadTodoSucces, (state, {todos}) =>  todos ),
+
+//     // Add Todo Returned by API when adding (appending)
+//     on(TodoActions.addTodoSuccess, (state, {todo}) =>  [...state, todo])
+// )
+
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
+import { Todo } from "../../model/profile.type";
+import { createReducer, on } from '@ngrx/store';
+import * as TodoActions from './todo.action'
+
+export interface TodoState extends EntityState<Todo>{
+    loading:boolean;
+    error:string | null;
+}
+
+export const adapter = createEntityAdapter<Todo>({
+    selectId: (todo) => todo.id,
+    sortComparer: (a,b) => a.title.localeCompare(b.title),
+})
+
+export const initialState:TodoState = adapter.getInitialState({
+    loading:false,
+    error:null
+})
 
 export const todoReducer = createReducer(
     initialState,
 
-    //Replace todo with one from API
-    on(TodoActions.loadTodoSucces, (state, {todos}) =>  todos ),
+    on(TodoActions.loadTodo, (state) => ({
+        ...state,
+        loading:true,
+        error:null
+    })),
 
-    // Add Todo Returned by API when adding (appending)
-    on(TodoActions.addTodoSuccess, (state, {todo}) =>  [...state, todo])
+    on(TodoActions.loadTodoSucces, (state, {todos}) =>
+        adapter.setAll(todos, {...state, loading:false})
+    ),
+
+    on(TodoActions.loadTodoFailure, (state, {error}) => ({
+        ...state,
+        loading:false,
+        error   
+    })),
+
+    on(TodoActions.addTodoSuccess, (state, {todo}) =>
+        adapter.addOne(todo, state)
+    )
 )
+
+// --- 5. Export selectors from adapter ---
+export const {
+  selectAll,      // gives array of todos
+  selectEntities, // gives dictionary of todos
+  selectIds,      // gives array of ids
+  selectTotal,    // gives count
+} = adapter.getSelectors();
