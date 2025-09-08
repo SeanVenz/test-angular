@@ -34,6 +34,14 @@ export class ApiService {
     });
   }
 
+  getProfile = (token:string) => {
+    const url = `http://localhost:3000/api/users/profile`
+    console.log(`Token when called from effect: Bearer ${token}`)
+    return this.http.get<UserResponseSuccess>(url, 
+      { withCredentials: true}
+    )
+  }
+
   login = (email:string, password:string) : Observable<UserResponseSuccess> => {
     const url = `http://localhost:3000/api/users/login`
     const body = {email, password };

@@ -3,9 +3,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectCounter } from '../../stateManagement/counter/counter.selectors';
 import { AsyncPipe, NgClass } from '@angular/common';
-import { Todo } from '../../model/profile.type';
+import { Todo, UserResponseSuccess } from '../../model/profile.type';
 // import { selectTodos } from '../../stateManagement/todo/todo.selector';
 import { FormsModule } from '@angular/forms';
+import { selectUser } from '../../stateManagement/auth/auth.selector';
 // import { toggleTodo } from '../../stateManagement/todo/todo.action';
 
 @Component({
@@ -30,4 +31,10 @@ export class AboutComponent {
   // onToggle(id:number){
   //   this.store.dispatch(toggleTodo({id}))
   // }
+
+  user$: Observable<UserResponseSuccess | null>;
+
+  constructor(private store:Store){
+    this.user$ = this.store.select(selectUser)
+  }
 }

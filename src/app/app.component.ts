@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, effect, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { UserCardComponent } from './components/user-card/user-card.component';
-import { Cart, Product, Profile, Student, Task, Todo } from './model/profile.type';
+import { Cart, Product, Profile, Student, Task, Todo, UserResponseSuccess } from './model/profile.type';
 import { ProfileCardComponentComponent } from './components/profile-card-component/profile-card-component.component';
 import { ProductCardComponent } from "./components/product-card/product-card.component";
 import { StudentComponent } from "./components/student/student.component";
 import { ApiService } from './services/api.service';
-import { catchError, combineLatest, concat, debounceTime, distinctUntilChanged, filter, forkJoin, from, fromEvent, interval, map, merge, Observable, of, race, Subscription, switchMap, take } from 'rxjs';
+import { catchError, combineLatest, concat, debounceTime, distinctUntilChanged, filter, forkJoin, from, fromEvent, interval, map, merge, Observable, of, race, Subscription, switchMap, take, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { SubjectsLessonComponent } from "./components/subjects-lesson/subjects-lesson.component";
@@ -16,6 +16,8 @@ import { Store } from '@ngrx/store';
 import { selectCounter } from './stateManagement/counter/counter.selectors';
 import { decrement, increment, reset } from './stateManagement/counter/counter.action';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import * as AuthActions from './stateManagement/auth/auth.action'
 
 @Component({
   selector: 'app-root',
@@ -165,65 +167,67 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy{
   //race is for the fastest observable
   // result = signal<any[]>([]);
 
-  ngOnInit(): void {
-    // interval(1000).pipe(
-    //   take(5), //limit to 5 only
-    //   filter((val) => (val % 2 === 0)), //choose what you want (could be string, etc)
-    //   map((val) => `Value: ${val * 2}`) //transform the 0, 1, 2 into Value: 0, 2, 4...
-    // ).subscribe({ 
-    //   next: (val) => this.message.set(val),
-    //   complete: () => console.log('done')
-    // })
+  // ngOnInit(): void {
+  //   // interval(1000).pipe(
+  //   //   take(5), //limit to 5 only
+  //   //   filter((val) => (val % 2 === 0)), //choose what you want (could be string, etc)
+  //   //   map((val) => `Value: ${val * 2}`) //transform the 0, 1, 2 into Value: 0, 2, 4...
+  //   // ).subscribe({ 
+  //   //   next: (val) => this.message.set(val),
+  //   //   complete: () => console.log('done')
+  //   // })
 
-    // interval(1000).pipe(
-    //   take(10),
-    //   filter((val) => val % 2 !== 0),
-    //   map((val) => val * 3),
-    // ).subscribe({
-    //   next:(val) => console.log(val),
-    //   complete: () => console.log('done') 
-    // })
+  //   // interval(1000).pipe(
+  //   //   take(10),
+  //   //   filter((val) => val % 2 !== 0),
+  //   //   map((val) => val * 3),
+  //   // ).subscribe({
+  //   //   next:(val) => console.log(val),
+  //   //   complete: () => console.log('done') 
+  //   // })
 
-    //Lesson 3 - Subjects
-    // this.subjectService.message.subscribe((mssg)=> {
-    //   this.message.set(mssg);
-    // })
-    // of(1,2,3).subscribe(val => console.log('Val:', val));
-    // from([1,2,3]).subscribe(val => console.log('Val: ', val));
+  //   //Lesson 3 - Subjects
+  //   // this.subjectService.message.subscribe((mssg)=> {
+  //   //   this.message.set(mssg);
+  //   // })
+  //   // of(1,2,3).subscribe(val => console.log('Val:', val));
+  //   // from([1,2,3]).subscribe(val => console.log('Val: ', val));
 
-    // from([1,2,3]).pipe(
-    //   map(val => val * 10),
-    // ).subscribe(val => console.log(val));
+  //   // from([1,2,3]).pipe(
+  //   //   map(val => val * 10),
+  //   // ).subscribe(val => console.log(val));
 
-    //sequential loading (depends on whos first in the parameter)
-    // const users = this.http.get<any[]>('https://jsonplaceholder.typicode.com/users')
-    // const posts = this.http.get<any[]>('https://jsonplaceholder.typicode.com/posts')
-    // concat(users, posts).subscribe((res) => {
-    //   if(Array.isArray(res) && res[0].username){
-    //     this.users.set(res.map((user: any) => user.username));
-    //   } else if(Array.isArray(res) && res[0].title){
-    //     this.posts.set(res.map((post:any) => post.title));
-    //   }
-    // })
+  //   //sequential loading (depends on whos first in the parameter)
+  //   // const users = this.http.get<any[]>('https://jsonplaceholder.typicode.com/users')
+  //   // const posts = this.http.get<any[]>('https://jsonplaceholder.typicode.com/posts')
+  //   // concat(users, posts).subscribe((res) => {
+  //   //   if(Array.isArray(res) && res[0].username){
+  //   //     this.users.set(res.map((user: any) => user.username));
+  //   //   } else if(Array.isArray(res) && res[0].title){
+  //   //     this.posts.set(res.map((post:any) => post.title));
+  //   //   }
+  //   // })
 
-    // forkJoin({
-    //   user: this.http.get('https://jsonplaceholder.typicode.com/users/1'),
-    //   post: this.http.get('https://jsonplaceholder.typicode.com/posts/1'),
-    //   todo: this.http.get('https://jsonplaceholder.typicode.com/todos/1'),
-    // }).subscribe(res => {
-    //   this.result.update(prev => [...prev, res]);
-    //   console.log(res)
-    // })
+  //   // forkJoin({
+  //   //   user: this.http.get('https://jsonplaceholder.typicode.com/users/1'),
+  //   //   post: this.http.get('https://jsonplaceholder.typicode.com/posts/1'),
+  //   //   todo: this.http.get('https://jsonplaceholder.typicode.com/todos/1'),
+  //   // }).subscribe(res => {
+  //   //   this.result.update(prev => [...prev, res]);
+  //   //   console.log(res)
+  //   // })
 
-    //race is used for what observable can finish first
-    // const users = this.http.get('https://jsonplaceholder.typicode.com/users/1');
-    // const posts = this.http.get('https://jsonplaceholder.typicode.com/posts/1');
-    // const todos = this.http.get('https://jsonplaceholder.typicode.com/todos/1');
+  //   //race is used for what observable can finish first
+  //   // const users = this.http.get('https://jsonplaceholder.typicode.com/users/1');
+  //   // const posts = this.http.get('https://jsonplaceholder.typicode.com/posts/1');
+  //   // const todos = this.http.get('https://jsonplaceholder.typicode.com/todos/1');
 
-    // race(users, posts, todos).subscribe(res => {
-    //   console.log('Winner: ', res)
-    // })
-  }
+  //   // race(users, posts, todos).subscribe(res => {
+  //   //   console.log('Winner: ', res)
+  //   // })
+
+    
+  // }
 
   ngAfterViewInit(): void {
     // debounceTime
@@ -271,9 +275,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy{
 
   counter: Observable<number>;
 
-  constructor(private store:Store){
+  constructor(private store:Store, private cookieService:CookieService){
     this.counter = this.store.select(selectCounter);
   }
+
+
+  ngOnInit(): void {
+    this.store.dispatch(AuthActions.loadUser());
+}
 
   onIncrement(){
     this.store.dispatch(increment());

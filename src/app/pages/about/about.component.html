@@ -6,3 +6,11 @@
     <input type="checkbox" [checked]="item.completed" (change)="onToggle(item.id)">
     <span [ngClass]="{done:item.completed}"> {{item.title}}</span>
 } -->
+
+@if (user$ | async; as user) {
+    <div class="success-message">
+        <p>Welcome, {{ user.user.username }}!</p>
+        <p>ID: {{ user.user.id }}</p>
+        <p>Email: {{ user.user.email }}</p>
+    </div>
+}

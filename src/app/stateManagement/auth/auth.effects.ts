@@ -6,11 +6,13 @@ import * as RegisterActions from './register.action'
 import { catchError, map, merge, mergeMap, of } from "rxjs";
 import { Todo, UserResponseSuccess, UserResponseFailure, RegisterResponse } from "../../model/profile.type";
 import { ApiService } from "../../services/api.service";
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthEffects {
     private authService = inject(ApiService);
     private actions$ = inject(Actions);
+    private cookieService = inject(CookieService);
 
     loginUser = createEffect(() => 
         this.actions$.pipe(
@@ -18,6 +20,7 @@ export class AuthEffects {
             mergeMap(({ user }) => {
                 return this.authService.login(user.email, user.password).pipe(
                     map((userResponse: UserResponseSuccess) => {
+                        this.cookieService.set('token', userResponse.token)
                         return UserActions.loadUserSuccess({ userResponse });
                     }),
                     catchError((error) => {
@@ -53,4 +56,35 @@ export class AuthEffects {
             })
         )
     )
+
+    loadUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(UserActions.loadUser),
+            mergeMap(() => {
+                const token = this.cookieService.get('token');
+                console.log('Token in effect: ', token)
+                if (!token) {
+                    return of(
+                        UserActions.loadUserFailed({
+                            userResponse: { success: false, message: 'No token' }
+                        })
+                    );
+                }
+
+                return this.authService.getProfile(token).pipe(
+                    map((userResponse: UserResponseSuccess) =>
+                    UserActions.loadUserSuccess({ userResponse })
+                    ),
+                    catchError((error) =>
+                        of(
+                            UserActions.loadUserFailed({
+                            userResponse: { success: false, message: error.error?.message || 'Profile fetch failed' }
+                            })
+                        )
+                    )
+                );
+            })
+        )
+    );
+
 }
