@@ -7,6 +7,7 @@ import { Todo, UserResponseSuccess } from '../../model/profile.type';
 // import { selectTodos } from '../../stateManagement/todo/todo.selector';
 import { FormsModule } from '@angular/forms';
 import { selectUser } from '../../stateManagement/auth/auth.selector';
+import { logout } from '../../stateManagement/auth/auth.action';
 // import { toggleTodo } from '../../stateManagement/todo/todo.action';
 
 @Component({
@@ -36,5 +37,9 @@ export class AboutComponent {
 
   constructor(private store:Store){
     this.user$ = this.store.select(selectUser)
+  }
+
+  logout(){
+    this.store.dispatch(logout())
   }
 }

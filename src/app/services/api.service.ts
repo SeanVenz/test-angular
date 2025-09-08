@@ -42,6 +42,11 @@ export class ApiService {
     )
   }
 
+  logout = () => {
+     const url = `http://localhost:3000/api/users/logout`
+     return this.http.post(url, '')
+  }
+
   login = (email:string, password:string) : Observable<UserResponseSuccess> => {
     const url = `http://localhost:3000/api/users/login`
     const body = {email, password };

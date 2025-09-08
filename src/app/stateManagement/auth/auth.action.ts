@@ -14,3 +14,5 @@ export const loadUserSuccess = createAction('[User] Load User Success',
 export const loadUserFailed = createAction('[User] Load User Failure',
     props<{userResponse:UserResponseFailure}>()
 );
+
+export const logout = createAction('[User] Logout')

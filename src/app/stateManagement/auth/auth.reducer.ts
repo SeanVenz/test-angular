@@ -41,5 +41,7 @@ export const userReducer = createReducer<AuthState>(
             loading:false,
             error: userResponse.message
         };
-    })
+    }),
+
+    on(UserActions.logout, () => initialState)
 )

@@ -3,7 +3,7 @@ import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as UserActions from './auth.action'
 import * as RegisterActions from './register.action'
-import { catchError, map, merge, mergeMap, of } from "rxjs";
+import { catchError, map, merge, mergeMap, of, tap } from "rxjs";
 import { Todo, UserResponseSuccess, UserResponseFailure, RegisterResponse } from "../../model/profile.type";
 import { ApiService } from "../../services/api.service";
 import { CookieService } from 'ngx-cookie-service';
@@ -86,5 +86,13 @@ export class AuthEffects {
             })
         )
     );
+
+    logout = createEffect(() => 
+        this.actions$.pipe(
+            ofType(UserActions.logout),
+            tap(() => this.cookieService.delete('token')),
+        ),
+        {dispatch:false}
+    )
 
 }
