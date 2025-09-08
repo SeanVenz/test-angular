@@ -50,7 +50,7 @@ import * as TodoActions from './todo.action'
 
 export interface TodoState extends EntityState<Todo>{
     loading:boolean;
-    error:string | null;
+    error: string | null;
 }
 
 export const adapter = createEntityAdapter<Todo>({
@@ -68,8 +68,7 @@ export const todoReducer = createReducer(
 
     on(TodoActions.loadTodo, (state) => ({
         ...state,
-        loading:true,
-        error:null
+        loading:true
     })),
 
     on(TodoActions.loadTodoSucces, (state, {todos}) =>
@@ -79,12 +78,9 @@ export const todoReducer = createReducer(
     on(TodoActions.loadTodoFailure, (state, {error}) => ({
         ...state,
         loading:false,
-        error   
-    })),
+        error
+    }))
 
-    on(TodoActions.addTodoSuccess, (state, {todo}) =>
-        adapter.addOne(todo, state)
-    )
 )
 
 // --- 5. Export selectors from adapter ---

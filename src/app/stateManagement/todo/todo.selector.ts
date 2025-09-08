@@ -6,7 +6,7 @@ import { TodoState, selectAll, selectTotal } from './todo.reducer';
 export const selectTodoState = createFeatureSelector<TodoState>('todos');
 
 //use the selectAll from entity (kind of the same as getting all todos)
-export const selectTodos = createSelector(selectTodoState, selectAll);
+export const selectTodos = createSelector(selectTodoState, selectAll)
 
 export const selectCompletedTodos = createSelector(selectTodos,
     (todos) => todos.filter(todo => todo.completed)
@@ -29,4 +29,14 @@ export const totalTodoCount = createSelector(selectTodoState, selectTotal);
 
 export const getCompletedProgress = createSelector(getCompletedTodos, totalTodoCount,
     (completed, total) => total > 0 ? Math.round((completed/total) * 100) : 0
+)
+
+export const selectLoading = createSelector(
+    selectTodoState,
+    (state) => state.loading
+)
+
+export const selectError = createSelector(
+    selectTodoState,
+    (state) => state.error
 )

@@ -37,6 +37,13 @@
 
 <input type="text" [(ngModel)]="newTodo">
 <button (click)="add()">Add Todo</button>
+
+@if(todoLoading$ | async){
+    <p>...Loading</p>
+}
+
+<p>{{todoError | async}}</p>
+
 <!-- <p>Completed: {{completed | async}}</p>
 <p>In Progress: {{inProgress | async}}</p>
 <p>Percentage: {{inProgress | async}}</p>
