@@ -79,6 +79,16 @@ export const todoReducer = createReducer(
         ...state,
         loading:false,
         error
+    })),
+
+    on(TodoActions.addTodoSuccess, (state, {todo}) =>
+        adapter.addOne(todo, {...state, loading:false})
+    ),
+
+    on(TodoActions.addTodoFailure, (state, {error}) => ({
+        ...state,
+        loading:false,
+        error
     }))
 
 )

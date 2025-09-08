@@ -33,7 +33,7 @@ export const loadTodoFailure = createAction('[Todo] Load Todos Failure',
 )
 
 export const addTodoAPI = createAction('[Todo] Add Todo', 
-    props<{title:string}>()
+    props<{todo:Todo}>()
 )
 
 export const addTodoSuccess = createAction('[Todo] Add Todo Success', 

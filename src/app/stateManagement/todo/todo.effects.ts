@@ -30,12 +30,8 @@ export class TodoEffects {
     addTodo$ = createEffect(() =>
         this.actions$.pipe(
             ofType(TodoActions.addTodoAPI),
-            mergeMap(({ title }) =>
-                this.http.post<Todo>('https://jsonplaceholder.typicode.com/todos', {
-                    title,
-                    completed: false,
-                    userId: 1
-                })
+            mergeMap(({ todo }) =>
+                this.api.addTodoForApi(todo)
                 .pipe(
                     map((todo) => TodoActions.addTodoSuccess({ todo })),
                     catchError((error) =>

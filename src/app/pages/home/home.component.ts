@@ -12,7 +12,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { selectTodos } from '../../stateManagement/todo/todo.selector';
 import * as TodoActions from '../../stateManagement/todo/todo.action'
 import { TodoState } from '../../stateManagement/todo/todo.reducer';
-
+import { v4 as uuid } from 'uuid';
 @Component({
   selector: 'app-home',
   imports: [AsyncPipe, RouterLink, FormsModule],
@@ -93,10 +93,14 @@ export class HomeComponent implements OnInit {
   }
 
   add(){
-    if(this.newTodo.trim()){
-      this.store.dispatch(TodoActions.addTodoAPI({title:this.newTodo}))
-      this.newTodo = ''
+    const todo:Todo = {
+      id: Date.now(),
+      userId: 1,
+      title: this.newTodo,
+      completed:false
     }
+
+    this.store.dispatch(TodoActions.addTodoAPI({todo}))
   }
 
   ngOnInit(): void {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { RegisterResponse, Todo, UserResponseSuccess } from '../model/profile.type';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,17 @@ export class ApiService {
   http = inject(HttpClient);
 
   getTodoFromApi = () => {
-    const url = 'https://jsonplaceholder.typicode.com/todos?_limit=5';
-    return this.http.get<Array<Todo>>(url);
+    const url = 'http://localhost:3000/api/todos/';
+    return this.http.get<{success: boolean, data: Todo[]}>(url).pipe(
+      map(response => response.data)
+    );
+  }
+
+  addTodoForApi = (todo:Todo) => {
+    const url = 'http://localhost:3000/api/todos/';
+    return this.http.post<{success: boolean, data: Todo}>(url, todo).pipe(
+      map(response => response.data)
+    );
   }
 
   register = (username:string, password:string, email:string) => {
