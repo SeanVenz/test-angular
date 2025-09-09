@@ -103,6 +103,15 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(TodoActions.addTodoAPI({todo}))
   }
 
+  toggleTodo(todo:Todo){
+    const updated = {...todo, completed: !todo.completed};
+    this.store.dispatch(TodoActions.updateTodo({todo:updated}));
+  }
+
+  editTodoTitle(todo:Todo, newTitle:string){
+    const updated = { ...todo, title: newTitle };
+    this.store.dispatch(TodoActions.updateTodo({todo:updated}));
+  }
 
 
   ngOnInit(): void {

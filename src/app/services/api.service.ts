@@ -25,6 +25,14 @@ export class ApiService {
     );
   }
 
+  editTodoApi = (todo:Todo) => {
+    const url = `http://localhost:3000/api/todos/${todo.id}`;
+    const body = { title: todo.title, completed:todo.completed };
+    return this.http.put<{success: boolean, data: Todo}>(url, body).pipe(
+      map(response => response.data)
+    );
+  }
+
   register = (username:string, password:string, email:string) => {
     const url = `http://localhost:3000/api/users/register`
     const body = {username, password, email};

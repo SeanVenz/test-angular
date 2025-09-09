@@ -43,3 +43,16 @@ export const addTodoSuccess = createAction('[Todo] Add Todo Success',
 export const addTodoFailure = createAction('[Todo] Add Todo Failure',
     props<{error:string}>()
 )
+
+export const updateTodo = createAction('[Todo] Update Todo', 
+    props<{todo:Todo}>()
+)
+
+export const updateTodoSuccess = createAction('[Todo] Update Todo Success',
+    props<{todo:Todo}>()
+)
+
+export const updateTodoFailure = createAction('[Todo] Update Todo Failure', 
+    props<{error:string}>()
+)
+

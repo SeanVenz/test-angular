@@ -7,12 +7,14 @@ import { catchError, map, merge, mergeMap, of, tap } from "rxjs";
 import { Todo, UserResponseSuccess, UserResponseFailure, RegisterResponse } from "../../model/profile.type";
 import { ApiService } from "../../services/api.service";
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthEffects {
     private authService = inject(ApiService);
     private actions$ = inject(Actions);
     private cookieService = inject(CookieService);
+    private router = inject(Router)
 
     loginUser = createEffect(() => 
         this.actions$.pipe(
@@ -27,7 +29,7 @@ export class AuthEffects {
                        
                         const failureResponse: UserResponseFailure = {
                             success: false,
-                            message: error.error?.message
+                            message: error.message
                         };
                         return of(UserActions.loadUserFailed({ userResponse: failureResponse }));
                     })
@@ -35,6 +37,17 @@ export class AuthEffects {
             })
         )
     );
+
+    // loginSuccess$ = createEffect(() => 
+    //     this.actions$.pipe(
+    //         ofType(UserActions.loadUserSuccess),
+    //         tap(({userResponse}) => {
+    //             if(userResponse && userResponse.success){
+    //                 this.router.navigate(['/about'])
+    //             }
+    //         })
+    //     )
+    // )
 
     registerUser = createEffect(() => 
         this.actions$.pipe(

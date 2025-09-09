@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as TodoActions from './todo.action'
-import { catchError, map, mergeMap, of } from "rxjs";
+import { catchError, map, merge, mergeMap, of } from "rxjs";
 import { Todo } from "../../model/profile.type";
 import { ApiService } from "../../services/api.service";
 
@@ -41,4 +41,18 @@ export class TodoEffects {
             )
         )
     );
+
+    editTodo = createEffect(() =>
+        this.actions$.pipe(
+            ofType(TodoActions.updateTodo),
+            mergeMap(({todo}) => 
+                this.api.editTodoApi(todo).pipe(
+                    map((updated) => TodoActions.updateTodoSuccess({todo:updated})),
+                    catchError((error) => 
+                        of(TodoActions.updateTodoFailure({error: error.message}))
+                    )
+                )
+            )
+        )
+    )
 }

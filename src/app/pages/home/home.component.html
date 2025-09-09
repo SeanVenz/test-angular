@@ -31,10 +31,15 @@
 
 @for (item of todos$ | async; track $index) {
     <ul>
-        <li>{{item.title}}</li>
-        <li>{{item.id}}</li>
-        <li>{{item.completed}}</li>
         <li>{{item.userId}}</li>
+        <li>{{item.id}}</li>
+        <input #titleInput value="{{item.title}}">
+        <input
+      type="checkbox"
+      [checked]="item.completed"
+      (change)="toggleTodo(item)"
+    />
+        <button (click)="editTodoTitle(item, titleInput.value)">Edit</button>
     </ul>
 }
 

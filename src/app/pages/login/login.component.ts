@@ -28,11 +28,7 @@ export class LoginComponent {
     this.error$ = this.store.select(selectAuthError);
     this.loading$ = this.store.select(selectAuthLoading)
 
-    this.user$.subscribe(user => {
-      if(user?.success){
-        this.router.navigate(['/about']);
-      }
-    });
+    console.log(this.error$);
   }
 
   form:FormGroup = this.fb.group({
