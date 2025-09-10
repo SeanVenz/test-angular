@@ -56,3 +56,18 @@ export const updateTodoFailure = createAction('[Todo] Update Todo Failure',
     props<{error:string}>()
 )
 
+export const deleteTodo = createAction('[Todo] Delete Todo', 
+    props<{id:string}>()
+)
+
+export const deleteTodoSuccess = createAction('[Todo] Delete Todo Success',
+    props<{ id:string }>()
+)
+
+export const deleteTodoFailure = createAction('[Todo] Delete Todo Failure',
+    props<{error:string}>()
+)
+
+export const deleteTodoRollback = createAction('[Todo] Delete Todo Rollback',
+    props<{todo:Todo}>()
+)

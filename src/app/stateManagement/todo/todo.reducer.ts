@@ -51,6 +51,7 @@ import * as TodoActions from './todo.action'
 export interface TodoState extends EntityState<Todo>{
     loading:boolean;
     error: string | null;
+    message: string | null
 }
 
 export const adapter = createEntityAdapter<Todo>({
@@ -60,7 +61,8 @@ export const adapter = createEntityAdapter<Todo>({
 
 export const initialState:TodoState = adapter.getInitialState({
     loading:false,
-    error:null
+    error:null,
+    message:null
 })
 
 export const todoReducer = createReducer(
@@ -94,7 +96,7 @@ export const todoReducer = createReducer(
     on(TodoActions.updateTodoSuccess, (state, {todo}) =>
         adapter.updateOne(
             { id: todo.id, changes: todo },
-            { ...state, loading: false }
+            { ...state, loading: false, message: 'Todo Updated Successfully' }
         )
     ),
 
@@ -102,7 +104,21 @@ export const todoReducer = createReducer(
         ...state,
         loading:false,
         error
-    }))
+    })),
+
+    on(TodoActions.deleteTodoSuccess, (state, {id}) =>
+        adapter.removeOne(id, { ...state, loading: false, message:'Deleted Successfully' })
+    ),
+
+    on(TodoActions.deleteTodoFailure, (state, {error}) => ({
+        ...state,
+        loading:false,
+        error
+    })),
+
+    on(TodoActions.deleteTodoRollback, (state, {todo}) => 
+        adapter.addOne(todo, {...state, loading:false})
+    )
 
 )
 

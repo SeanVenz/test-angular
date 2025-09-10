@@ -40,3 +40,8 @@ export const selectError = createSelector(
     selectTodoState,
     (state) => state.error
 )
+
+export const selectMessage = createSelector(
+    selectTodoState,
+    (state) => state.message
+)

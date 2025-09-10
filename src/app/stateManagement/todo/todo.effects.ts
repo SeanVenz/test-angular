@@ -55,4 +55,20 @@ export class TodoEffects {
             )
         )
     )
+
+    deleteTodo = createEffect(() =>
+        this.actions$.pipe(
+            ofType(TodoActions.deleteTodo),
+            mergeMap(({ id }) =>
+                this.api.deleteTodoApi(id).pipe(
+                    map(() => TodoActions.deleteTodoSuccess({ id })), // ✅ return id we passed in
+                    catchError((error) => 
+                        // return of(TodoActions.deleteTodoRollback({ todo: { id, title: 'Recovered', completed: false } }));
+                        of(TodoActions.deleteTodoFailure({ error: error.message }))
+                    // of(TodoActions.deleteTodoFailure({ error: error.message }))
+                    )
+                )
+            )
+        )
+    );
 }

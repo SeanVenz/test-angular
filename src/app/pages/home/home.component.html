@@ -40,6 +40,7 @@
       (change)="toggleTodo(item)"
     />
         <button (click)="editTodoTitle(item, titleInput.value)">Edit</button>
+        <button (click)="deleteTodo(item.id)">Delete</button>
     </ul>
 }
 
@@ -48,6 +49,10 @@
 
 @if(todoLoading$ | async){
     <p>...Loading</p>
+}
+
+@if(todoSuccess | async){
+    <p>{{todoSuccess | async}}</p>
 }
 
 <p>{{todoError | async}}</p>

@@ -6,7 +6,7 @@ import { decrement, increment, reset } from '../../stateManagement/counter/count
 import { AsyncPipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Todo } from '../../model/profile.type';
-import { getCompletedProgress, getCompletedTodos, selectError, selectLoading, selectTodoState, totalTodoCount } from '../../stateManagement/todo/todo.selector';
+import { getCompletedProgress, getCompletedTodos, selectError, selectLoading, selectMessage, selectTodoState, totalTodoCount } from '../../stateManagement/todo/todo.selector';
 // import { addTodo, removeTodo, toggleTodo } from '../../stateManagement/todo/todo.action';
 import { FormsModule, NgModel } from '@angular/forms';
 import { selectTodos } from '../../stateManagement/todo/todo.selector';
@@ -74,6 +74,7 @@ export class HomeComponent implements OnInit {
   error = signal<string>('');
   todoLoading$:Observable<boolean>
   todoError:Observable<string | null>
+  todoSuccess:Observable<string | null>
   // completed:Observable<number>;
   // total:Observable<number>;
   // inProgress:Observable<number>;
@@ -81,6 +82,7 @@ export class HomeComponent implements OnInit {
     this.todos$ = this.store.select(selectTodos)
     this.todoLoading$ = this.store.select(selectLoading)
     this.todoError = this.store.select(selectError);
+    this.todoSuccess = this.store.select(selectMessage);
     // this.completed = this.store.select(getCompletedTodos);
     // this.total = this.store.select(totalTodoCount);
     // this.inProgress = this.store.select(getCompletedProgress)
@@ -94,7 +96,7 @@ export class HomeComponent implements OnInit {
 
   add(){
     const todo:Todo = {
-      id: Date.now(),
+      id: Date.now().toString(),
       userId: 1,
       title: this.newTodo,
       completed:false
@@ -111,6 +113,10 @@ export class HomeComponent implements OnInit {
   editTodoTitle(todo:Todo, newTitle:string){
     const updated = { ...todo, title: newTitle };
     this.store.dispatch(TodoActions.updateTodo({todo:updated}));
+  }
+
+  deleteTodo(id:string){
+    this.store.dispatch(TodoActions.deleteTodo({id}))
   }
 
 
