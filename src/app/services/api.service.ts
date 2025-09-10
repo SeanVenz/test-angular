@@ -13,14 +13,16 @@ export class ApiService {
 
   getTodoFromApi = () => {
     const url = 'http://localhost:3000/api/todos/';
-    return this.http.get<{success: boolean, data: Todo[]}>(url).pipe(
+    return this.http.get<{success: boolean, data: Todo[]}>(url,
+      { withCredentials: true}
+    ).pipe(
       map(response => response.data)
     );
   }
 
   addTodoForApi = (todo:Todo) => {
     const url = 'http://localhost:3000/api/todos/';
-    return this.http.post<{success: boolean, data: Todo}>(url, todo).pipe(
+    return this.http.post<{success: boolean, data: Todo}>(url, todo, { withCredentials: true}).pipe(
       map(response => response.data)
     );
   }
@@ -28,14 +30,14 @@ export class ApiService {
   editTodoApi = (todo:Todo) => {
     const url = `http://localhost:3000/api/todos/${todo.id}`;
     const body = { title: todo.title, completed:todo.completed };
-    return this.http.put<{success: boolean, data: Todo}>(url, body).pipe(
+    return this.http.put<{success: boolean, data: Todo}>(url, body, { withCredentials: true}).pipe(
       map(response => response.data)
     );
   }
 
   deleteTodoApi = (id:string) => {
     const url = `http://localhost:3000/api/todos/${id}`;
-    return this.http.delete<{id:string}>(url)
+    return this.http.delete<{id:string}>(url, { withCredentials: true})
   }
 
   register = (username:string, password:string, email:string) => {
