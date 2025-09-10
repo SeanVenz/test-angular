@@ -3,7 +3,7 @@ import {
   provideZoneChangeDetection,
   isDevMode,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withRouterConfig } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
@@ -16,14 +16,18 @@ import { TodoEffects } from './stateManagement/todo/todo.effects';
 import { userReducer } from './stateManagement/auth/auth.reducer';
 import { AuthEffects } from './stateManagement/auth/auth.effects';
 import { registerReducer } from './stateManagement/auth/register.reducer';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+import { RouterEffects } from './stateManagement/routes/router.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore({ counter: counterReducer, todos: todoReducer, user:userReducer, register:registerReducer }),
+    provideStore({ counter: counterReducer, todos: todoReducer, user: userReducer, register: registerReducer, router:routerReducer }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects([TodoEffects, AuthEffects]),
-  ],
+    provideEffects([TodoEffects, AuthEffects, RouterEffects]),
+    provideRouterStore(),
+    provideRouter(routes, withRouterConfig({onSameUrlNavigation: 'reload'}))
+],
 };

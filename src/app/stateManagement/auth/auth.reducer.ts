@@ -25,6 +25,15 @@ export const userReducer = createReducer<AuthState>(
         };
     }),
 
+    on(UserActions.loginUserSuccess, (state, {userResponse}) => {
+        return {
+            ...state,
+            user:userResponse,
+            loading: false,
+            error:null
+        };
+    }),
+
     on(UserActions.loadUserSuccess, (state, {userResponse}) => {
         return {
             ...state,

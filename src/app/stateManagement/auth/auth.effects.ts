@@ -8,6 +8,7 @@ import { Todo, UserResponseSuccess, UserResponseFailure, RegisterResponse } from
 import { ApiService } from "../../services/api.service";
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from "@angular/router";
+import * as RouterActions from '../routes/route.actions'
 
 @Injectable()
 export class AuthEffects {
@@ -23,7 +24,7 @@ export class AuthEffects {
                 return this.authService.login(user.email, user.password).pipe(
                     map((userResponse: UserResponseSuccess) => {
                         this.cookieService.set('token', userResponse.token)
-                        return UserActions.loadUserSuccess({ userResponse });
+                        return UserActions.loginUserSuccess({ userResponse });
                     }),
                     catchError((error) => {
                        
@@ -38,16 +39,14 @@ export class AuthEffects {
         )
     );
 
-    // loginSuccess$ = createEffect(() => 
-    //     this.actions$.pipe(
-    //         ofType(UserActions.loadUserSuccess),
-    //         tap(({userResponse}) => {
-    //             if(userResponse && userResponse.success){
-    //                 this.router.navigate(['/about'])
-    //             }
-    //         })
-    //     )
-    // )
+    loginSuccess$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(UserActions.loginUserSuccess),
+            map(() => 
+                RouterActions.go({path:['/about']})
+            )
+        )
+    )
 
     registerUser = createEffect(() => 
         this.actions$.pipe(
@@ -99,13 +98,12 @@ export class AuthEffects {
             })
         )
     );
-
     logout = createEffect(() => 
         this.actions$.pipe(
             ofType(UserActions.logout),
-            tap(() => this.cookieService.delete('token')),
+                tap(() => this.cookieService.delete('token')),
+                map(() => RouterActions.go({ path: ['/login'] }))
         ),
-        {dispatch:false}
     )
 
 }

@@ -2,15 +2,18 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import * as TodoActions from './todo.action'
-import { catchError, map, merge, mergeMap, of } from "rxjs";
+import { catchError, map, merge, mergeMap, of, filter, switchMap, withLatestFrom } from "rxjs";
 import { Todo } from "../../model/profile.type";
 import { ApiService } from "../../services/api.service";
+import { Store } from "@ngrx/store";
+import { selectTodoId } from "../routes/router.selector";
 
 @Injectable()
 export class TodoEffects {
     private actions$ = inject(Actions);
     private http = inject(HttpClient);
-    private api = inject(ApiService)
+    private api = inject(ApiService);
+    private store = inject(Store);
 
     //load Todo
     loadTodos$ = createEffect(() =>
@@ -71,4 +74,17 @@ export class TodoEffects {
             )
         )
     );
-}
+    loadTodoOnRouteChange = createEffect(() =>
+        this.actions$.pipe(
+            ofType('@ngrx/router-store/navigation'),
+            withLatestFrom(this.store.select(selectTodoId)),
+            filter(([_, id]: [any, any]) => !!id),
+            switchMap(([_, id]: [any, any]) =>
+                this.api.getTodoApi(id!).pipe(
+                    map(todo => TodoActions.loadTodoSucces({ todos: [todo] })),
+                    catchError(err => of(TodoActions.loadTodoFailure({ error: err.message })))
+                )
+            )
+        )
+    );
+};

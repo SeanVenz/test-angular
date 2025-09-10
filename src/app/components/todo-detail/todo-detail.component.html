@@ -1,0 +1,5 @@
+<p>todo-detail works!</p>
+<ng-container *ngIf="todo | async as todo">
+      <h2>{{ todo.title }}</h2>
+      <p>{{ todo.userId }}</p>
+</ng-container>

@@ -40,6 +40,13 @@ export class ApiService {
     return this.http.delete<{id:string}>(url, { withCredentials: true})
   }
 
+  getTodoApi = (id:string) => {
+    const url = `http://localhost:3000/api/todos/${id}`;
+    return this.http.get<{success:boolean, data:Todo}>(url, { withCredentials: true}).pipe(
+      map(response => response.data)
+    )
+  }
+
   register = (username:string, password:string, email:string) => {
     const url = `http://localhost:3000/api/users/register`
     const body = {username, password, email};

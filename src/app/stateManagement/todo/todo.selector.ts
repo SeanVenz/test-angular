@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { Todo } from "../../model/profile.type";
 import { TodoState, selectAll, selectTotal } from './todo.reducer';
+import { selectTodoId } from "../routes/router.selector";
 
 //get todo slice based on app.config
 export const selectTodoState = createFeatureSelector<TodoState>('todos');
@@ -44,4 +45,10 @@ export const selectError = createSelector(
 export const selectMessage = createSelector(
     selectTodoState,
     (state) => state.message
+)
+
+export const selectCurrentTodo = createSelector(
+    selectTodoState,
+    selectTodoId,
+    (state, id) => state.entities[id!]
 )
